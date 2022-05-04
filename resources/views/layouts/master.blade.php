@@ -10,14 +10,18 @@ Author URL: http://w3layouts.com
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Collective Admin Panel a Flat Bootstrap Responsive Website Template | Home :: W3Layouts</title>
+    <title>Plots Management System - Home</title>
 
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{asset('assets/css/style-starter.css')}}">
-
+    <link rel="stylesheet" href="{{asset('css/jquery.dataTables.min.css')}}">
+    {{--
+    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"> --}}
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- google fonts -->
     {{--
     <link href="//fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet"> --}}
+
 </head>
 
 <body class="sidebar-menu-collapsed">
@@ -28,20 +32,21 @@ Author URL: http://w3layouts.com
 
             <!-- logo start -->
             <div class="logo">
-                <h1><a href="index.html">Collective</a></h1>
+                <h1><a href="index.html">Plot Management</a></h1>
             </div>
 
             <!-- if logo is image enable this -->
-            <!-- image logo --
-    <div class="logo">
-      <a href="index.html">
-        <img src="image-path" alt="Your logo" title="Your logo" class="img-fluid" style="height:35px;" />
-      </a>
-    </div>
-    <!-- //image logo -->
+            <!-- image logo -->
+            {{-- <div class="logo">
+                <a href="index.html">
+                    <img src="image-path" alt="Your logo" title="Your logo" class="img-fluid" style="height:35px;" />
+                </a>
+            </div> --}}
+            {{--
+            <!-- //image logo --> --}}
 
-            <div class="logo-icon text-center">
-                <a href="index.html" title="logo"><img src="assets/images/logo.png" alt="logo-icon"> </a>
+            <div class="flex items-center bg-blue-800 justify-center" style="height: 60px; width: 60px; ">
+                <a href="index.html" title="logo"><img src="{{asset('assets/images/logo.png')}}" alt="logo-icon"> </a>
             </div>
             <!-- //logo end -->
 
@@ -52,17 +57,18 @@ Author URL: http://w3layouts.com
                     <li class="active"><a href="index.html"><i class="fa fa-tachometer"></i><span> Dashboard</span></a>
                     </li>
                     <li class="menu-list">
-                        <a href="#"><i class="fa fa-cogs"></i>
-                            <span>Elements <i class="lnr lnr-chevron-right"></i></span></a>
+                        <a href="/users"><i class="fa fa-users"></i>
+                            <span>Users <i class="lnr lnr-chevron-right"></i></span></a>
                         <ul class="sub-menu-list">
-                            <li><a href="carousels.html">Carousels</a> </li>
-                            <li><a href="cards.html">Default cards</a> </li>
-                            <li><a href="people.html">People cards</a></li>
+                            <li><a href="carousels.html">Customers</a> </li>
+                            <li><a href="/admin/users/admin">Admins</a> </li>
+                            {{-- <li><a href="people.html">People cards</a></li> --}}
                         </ul>
                     </li>
-                    <li><a href="pricing.html"><i class="fa fa-table"></i> <span>Pricing tables</span></a></li>
-                    <li><a href="blocks.html"><i class="fa fa-th"></i> <span>Content blocks</span></a></li>
-                    <li><a href="forms.html"><i class="fa fa-file-text"></i> <span>Forms</span></a></li>
+                    <li><a href="/authority"><i class="fa fa-th"></i> <span>Authority Levels</span></a></li>
+                    <li><a href="/"><i class="fa fa-th"></i> <span>Plots</span></a></li>
+                    <li><a href="/settings"><i class="fa fa-cogs"></i> <span>Settings</span></a></li>
+                    {{-- <li><a href="forms.html"><i class="fa fa-file-text"></i> <span>Forms</span></a></li> --}}
                 </ul>
                 <!-- //sidebar nav end -->
                 <!-- toggle button start -->
@@ -87,7 +93,7 @@ Author URL: http://w3layouts.com
                         </form>
                     </div>
                     <div class="user-dropdown-details d-flex">
-                        <div class="profile_details_left">
+                        {{-- <div class="profile_details_left">
                             <ul class="nofitications-dropdown">
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i
@@ -171,14 +177,15 @@ Author URL: http://w3layouts.com
                                     </ul>
                                 </li>
                             </ul>
-                        </div>
+                        </div> --}}
                         <div class="profile_details">
                             <ul>
                                 <li class="dropdown profile_details_drop">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3"
                                         aria-haspopup="true" aria-expanded="false">
                                         <div class="profile_img">
-                                            <img src="assets/images/profileimg.jpg" class="rounded-circle" alt="" />
+                                            <img src="{{asset('assets/images/profileimg.jpg')}}" class="rounded-circle"
+                                                alt="" />
                                             <div class="user-active">
                                                 <span></span>
                                             </div>
@@ -186,14 +193,23 @@ Author URL: http://w3layouts.com
                                     </a>
                                     <ul class="dropdown-menu drp-mnu" aria-labelledby="dropdownMenu3">
                                         <li class="user-info">
-                                            <h5 class="user-name">John Deo</h5>
-                                            <span class="status ml-2">Available</span>
+                                            <h5 class="user-name">{{Auth::user()->name}}</h5>
+                                            <span class="status ml-2">
+                                                @if (Auth::user()->role == '3')
+                                                Super Admin
+                                                @else
+                                                @if (Auth::user()->role == '3')
+                                                Admin
+                                                @else
+                                                Customer Account
+                                                @endif
+
+                                                @endif
+                                            </span>
                                         </li>
                                         <li> <a href="#"><i class="lnr lnr-user"></i>My Profile</a> </li>
-                                        <li> <a href="#"><i class="lnr lnr-users"></i>1k Followers</a> </li>
                                         <li> <a href="#"><i class="lnr lnr-cog"></i>Setting</a> </li>
-                                        <li> <a href="#"><i class="lnr lnr-heart"></i>100 Likes</a> </li>
-                                        <li class="logout"> <a href="#sign-up.html"><i class="fa fa-power-off"></i>
+                                        <li class="logout"> <a href="/logout"><i class="fa fa-power-off"></i>
                                                 Logout</a> </li>
                                     </ul>
                                 </li>
@@ -218,6 +234,7 @@ Author URL: http://w3layouts.com
                     </ol>
                 </nav>
 
+                @yield('content')
 
             </div>
             <!-- //content -->
@@ -225,6 +242,7 @@ Author URL: http://w3layouts.com
         <!-- main content end-->
     </section>
 
+    @yield('bottom')
     <!--footer section end-->
     <!-- move top -->
     <button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
@@ -253,22 +271,25 @@ Author URL: http://w3layouts.com
     <!-- /move top -->
 
 
-    <script src="assets/js/jquery-3.3.1.min.js"></script>
-    <script src="assets/js/jquery-1.10.2.min.js"></script>
-
+    <script src="{{asset('assets/js/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{asset('assets/js/jquery-1.10.2.min.js')}}"></script>
+    <script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('js/alpine.min.js')}}"></script>
+    {{-- <script src="{{asset('css/jquery.dataTables.min.css')}}"></script> --}}
+    @yield('scripts')
     <!-- chart js -->
-    <script src="assets/js/Chart.min.js"></script>
-    <script src="assets/js/utils.js"></script>
+    <script src="{{asset('assets/js/Chart.min.js')}}"></script>
+    <script src="{{asset('assets/js/utils.js')}}"></script>
     <!-- //chart js -->
 
     <!-- Different scripts of charts.  Ex.Barchart, Linechart -->
-    <script src="assets/js/bar.js"></script>
-    <script src="assets/js/linechart.js"></script>
+    <script src="{{asset('assets/js/bar.js')}}"></script>
+    <script src="{{asset('assets/js/linechart.js')}}"></script>
     <!-- //Different scripts of charts.  Ex.Barchart, Linechart -->
 
 
-    <script src="assets/js/jquery.nicescroll.js"></script>
-    <script src="assets/js/scripts.js"></script>
+    <script src="{{asset('assets/js/jquery.nicescroll.js')}}"></script>
+    <script src="{{asset('assets/js/scripts.js')}}"></script>
 
     <!-- close script -->
     <script>
@@ -294,7 +315,7 @@ Author URL: http://w3layouts.com
     <!-- disable body scroll when navbar is in active -->
 
     <!-- loading-gif Js -->
-    <script src="assets/js/modernizr.js"></script>
+    <script src="{{asset('assets/js/modernizr.js')}}"></script>
     <script>
         $(window).load(function () {
          // Animate loader off screen
@@ -304,7 +325,7 @@ Author URL: http://w3layouts.com
     <!--// loading-gif Js -->
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
 
 </body>
 

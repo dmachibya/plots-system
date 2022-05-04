@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\AuthorityController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +17,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
-})->middleware("auth");
-
+    return redirect("dashboard");
+});
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+    return view('home');
+})->middleware("auth")->name('dashboard');
+
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/login');
+});
+
+Route::post('/admin/users/admin/create', [UserController::class, 'create'])->middleware("admin");
+Route::get('/authority', [AuthorityController::class, 'index'])->middleware("admin");
+Route::post('/admin/authority/{level}', [AuthorityController::class, 'create'])->middleware("admin");
+Route::get('/authority/{level}/{level_id}', [AuthorityController::class, 'view'])->middleware("admin");
+
+Route::get('/admin/users/admin', [UserController::class, 'index'])->middleware(["auth", "admin"]);
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
 require __DIR__ . '/auth.php';
