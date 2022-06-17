@@ -33,15 +33,18 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->district);
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'district' => ['required', 'max:255'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'district' => $request->district,
             'password' => Hash::make($request->password),
         ]);
 

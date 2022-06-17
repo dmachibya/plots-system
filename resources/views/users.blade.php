@@ -2,10 +2,7 @@
 
 @section('content')
 <div x-data="{adminModal: false}">
-    <div class="flex justify-end">
-        <button @click="adminModal = !adminModal" class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Add
-            Admin</button>
-    </div>
+
     <div class="relative" x-show.transition="adminModal">
         <div class="bg-white rounded-lg fixed shadow-md top-8 w-full  sm:left-1/2 sm:w-96 sm:-ml-48  z-30">
             <span @click="adminModal = !adminModal" class="absolute top-2 right-4 text-4xl cursor-pointer">
@@ -25,13 +22,9 @@
                     <div class="">
                         <label for="district">District</label>
                         <br>
-                        @php
-                        $districts = DB::table('authorities')->where('level', 1)->get();
-                        @endphp
-                        <select name="district" required>
-                            @foreach ($districts as $item)
-                            <option value="{{$item->id}}">{{$item->name}}</option>
-                            @endforeach
+                        <select name="district">
+                            <option value="Arusha Urban">Arusha Urban</option>
+                            <option value="Arusha Rural">Arusha Rural</option>
                         </select>
                         {{-- <input type="text" name="district" placeholder="District"
                             class="w-full border border-solid border-gray-500 px-4 py-2 rounded-md"> --}}
@@ -62,54 +55,68 @@
     <div x-show.transition="adminModal" @click="adminModal = !adminModal"
         class="bg-black opacity-60 fixed w-full top-0 left-0 right-0 bottom-0 z-20">
     </div>
-</div>
-<div class="bg-white shadow-md px-8 py-6 rounded-md">
-    <table id="table_id" class="display">
-        <thead>
-            <tr>
-                <th>Fullname</th>
-                <th>Email</th>
-                <th>District</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($users as $item)
-            <tr>
-                <td>{{$item->name}}</td>
-                <td>{{$item->email}}</td>
-                <td>
-                    @php
-                    $district = DB::table('authorities')->where('id', $item->district)->first();
-                    @endphp
-                    {{$district->name}}
+    <div class="bg-white shadow-md px-8 py-6 rounded-md">
+        <table id="table_id" class="display">
+            <thead>
+                <tr>
+                    <th>Fullname</th>
+                    <th>Email</th>
+                    <th>District</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($users as $item)
+                <tr>
+                    <td>{{$item->name}}</td>
+                    <td>{{$item->email}}</td>
+                    <td>
+                        @php
+                        $district = DB::table('authorities')->where('id', $item->district)->first();
+                        @endphp
+                        {{$district->name}}
 
-                </td>
-                <td>
-                    {{-- <div class="flex justify-end">
-                        <button @click="adminModal = !adminModal"
-                            class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Add
-                            Admin</button> --}}
-                    </div>
-                    <a href="/users/delete/{{$item->id}}"
-                        class="bg-red-500 shadow-md px-4 py-2 text-white rounded-md my-2">Delete
-                        User</a>
-                </td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+                    </td>
+                    <td>
+                        {{-- <div class="flex justify-end">
+                            <button @click="adminModal = !adminModal"
+                                class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Add
+                                Admin</button> --}}
+                        </div>
+                        <a href="/users/delete/{{$item->id}}"
+                            class="bg-red-500 shadow-md px-4 py-2 text-white rounded-md my-2">Delete User</a>
+                    </td>
+
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </div>
 @endsection
 
 @section('bottom')
 
 @endsection
-
+@section('header')
+<link rel="stylesheet" href="{{asset('css/buttons.dataTables.min.css')}}">
+@endsection
 @section('scripts')
 <script>
     $(document).ready( function () {
-        $('#table_id').DataTable();
+        $('#table_id').DataTable({
+        dom: 'Bfrtip',
+        buttons: [
+        'copy', 'csv', 'excel', 'pdf', 'print', 'colvis'
+        ]
+        });
         } );
 </script>
+<script src="{{asset('js/dataTables.buttons.min.js')}}"></script>
+<script src="{{asset('js/jszip.min.js')}}"></script>
+<script src="{{asset('js/pdfmake.min.js')}}"></script>
+<script src="{{asset('js/vfs_fonts.js')}}"></script>
+<script src="{{asset('js/buttons.html5.min.js')}}"></script>
+<script src="{{asset('js/buttons.print.min.js')}}"></script>
+<script src="{{asset('js/buttons.colVis.min.js')}}"></script>
 @endsection

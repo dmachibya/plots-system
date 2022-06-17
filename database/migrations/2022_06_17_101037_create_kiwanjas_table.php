@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAuthoritiesTable extends Migration
+class CreateKiwanjasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateAuthoritiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('authorities', function (Blueprint $table) {
+        Schema::create('kiwanjas', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("level");
-            $table->string("parent_level")->nullable();
-            $table->string("parent_level_id")->nullable();
-            $table->string("owner")->nullable();
+            $table->bigInteger("authority_id");
+            $table->bigInteger("user_id");
+            $table->boolean("conflict")->nullable();
+            $table->integer("price")->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateAuthoritiesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('authorities');
+        Schema::dropIfExists('kiwanjas');
     }
 }

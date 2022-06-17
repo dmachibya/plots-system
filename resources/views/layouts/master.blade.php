@@ -21,7 +21,7 @@ Author URL: http://w3layouts.com
     <!-- google fonts -->
     {{--
     <link href="//fonts.googleapis.com/css?family=Nunito:300,400,600,700,800,900&display=swap" rel="stylesheet"> --}}
-
+    @yield('header')
 </head>
 
 <body class="sidebar-menu-collapsed">
@@ -56,18 +56,26 @@ Author URL: http://w3layouts.com
                 <ul class="nav nav-pills nav-stacked custom-nav">
                     <li class="active"><a href="index.html"><i class="fa fa-tachometer"></i><span> Dashboard</span></a>
                     </li>
+
+
+                    @if (Auth::user()->role == '3')
+
                     <li class="menu-list">
                         <a href="/users"><i class="fa fa-users"></i>
                             <span>Users <i class="lnr lnr-chevron-right"></i></span></a>
                         <ul class="sub-menu-list">
-                            <li><a href="carousels.html">Customers</a> </li>
+                            <li><a href="/users">Customers</a> </li>
                             <li><a href="/admin/users/admin">Admins</a> </li>
                             {{-- <li><a href="people.html">People cards</a></li> --}}
                         </ul>
                     </li>
-                    <li><a href="/authority"><i class="fa fa-th"></i> <span>Authority Levels</span></a></li>
-                    <li><a href="/"><i class="fa fa-th"></i> <span>Plots</span></a></li>
-                    <li><a href="/settings"><i class="fa fa-cogs"></i> <span>Settings</span></a></li>
+                    @endif
+
+                    @if (Auth::user()->role != '0')
+                    <li><a href="/authority/0"><i class="fa fa-th"></i> <span>Authority Levels</span></a></li>
+                    @endif
+                    <li><a href="/plots"><i class="fa fa-th"></i> <span>Plots</span></a></li>
+                    {{-- <li><a href="/settings"><i class="fa fa-cogs"></i> <span>Settings</span></a></li> --}}
                     {{-- <li><a href="forms.html"><i class="fa fa-file-text"></i> <span>Forms</span></a></li> --}}
                 </ul>
                 <!-- //sidebar nav end -->
@@ -184,7 +192,7 @@ Author URL: http://w3layouts.com
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="dropdownMenu3"
                                         aria-haspopup="true" aria-expanded="false">
                                         <div class="profile_img">
-                                            <img src="{{asset('assets/images/profileimg.jpg')}}" class="rounded-circle"
+                                            <img src="{{asset('assets/images/profileimg.png')}}" class="rounded-circle"
                                                 alt="" />
                                             <div class="user-active">
                                                 <span></span>
@@ -231,6 +239,10 @@ Author URL: http://w3layouts.com
                     <ol class="breadcrumb my-breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @yield('location')
+                        </li>
+
                     </ol>
                 </nav>
 
@@ -326,6 +338,8 @@ Author URL: http://w3layouts.com
 
     <!-- Bootstrap Core JavaScript -->
     <script src="{{asset('assets/js/bootstrap.min.js')}}"></script>
+
+    {{-- @yield('scripts') --}}
 
 </body>
 

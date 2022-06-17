@@ -18,8 +18,12 @@ class Admin
     public function handle(Request $request, Closure $next)
     {
         if (Auth::user()) {
-            if (Auth::user()->role != '3') {
-                return redirect("/dashboard");
+            if (Auth::user()->role != 3) {
+                if (Auth::user()->role != 1) {
+                    return redirect("/dashboard");
+                }
+                // dd("No permission" . Auth::user()->role);
+                // return redirect("/dashboard");
             }
         } else {
             return redirect("/dashboard");
