@@ -4,19 +4,36 @@
 <div x-data="{districtModal: false, tarafaModal: false, kataModal: false, kijijiModal: false, kiwanjaModal: false}">
 
     @if ($kiwanja->price == Null)
-
-    <div class="flex justify-end">
-        <button @click="districtModal = !districtModal"
-            class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Sell Kiwanja
-        </button>
-    </div>
-    @else
+    @if (Auth::user()->role != "0")
     <div class="flex justify-end">
         <a href="/admin/kiwanja/sold/{{$kiwanja->id}}"
             class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as Sold
         </a>
     </div>
-
+    @else
+    @if(Auth::user()->id == $kiwanja->user_id)
+    <div class="flex justify-end">
+        <a href="/admin/kiwanja/sold/{{$kiwanja->id}}"
+            class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as Sold
+        </a>
+    </div>
+    @endif
+    @endif
+    @else
+    @if (Auth::user()->role != "0")
+    <div class="flex justify-end">
+        <a href="/admin/kiwanja/sold/{{$kiwanja->id}}"
+            class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as Sold
+        </a>
+    </div>
+    @else
+    @if(Auth::user()->id == $kiwanja->user_id)
+    <div class="flex justify-end">
+        <a href="/admin/kiwanja/sold/{{$kiwanja->id}}"
+            class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as Sold
+        </a>
+    </div>
+    @endif
     @endif
 
     <div class="relative" x-show.transition="districtModal">

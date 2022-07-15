@@ -24,15 +24,16 @@ class AuthorityController extends Controller
     public function plots()
 
     {
-        $collection = Authority::where('level', '5')->get();
+        $collection = Authority::where('level', '5')->join("kiwanjas", "authorities.id", "=", "kiwanjas.authority_id")->get();
 
         if (Auth::user()->role == "1") {
             $collection =
-                Authority::where('level', '5')->where("parent_level_id", Auth::user()->district)->get();
+                Authority::where('level', '5')->join("kiwanjas", "authorities.id", "=", "kiwanjas.authority_id")->where("parent_level_id", Auth::user()->district)->get();
         }
         if (Auth::user()->role == "0") {
             $collection =
-                Authority::where('level', '5')->where("owner", Auth::user()->id)->get();
+                Authority::where('level', '5')->join("kiwanjas", "authorities.id", "=", "kiwanjas.authority_id")->get();
+            return view("plots")->with("collection", $collection);
         }
         return view("authority")->with("collection", $collection);
     }

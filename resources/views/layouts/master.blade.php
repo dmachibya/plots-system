@@ -32,7 +32,7 @@ Author URL: http://w3layouts.com
 
             <!-- logo start -->
             <div class="logo">
-                <h1><a href="index.html">Plot Management</a></h1>
+                <h1><a href="/">Plot Management</a></h1>
             </div>
 
             <!-- if logo is image enable this -->
@@ -46,7 +46,7 @@ Author URL: http://w3layouts.com
             <!-- //image logo --> --}}
 
             <div class="flex items-center bg-blue-800 justify-center" style="height: 60px; width: 60px; ">
-                <a href="index.html" title="logo"><img src="{{asset('assets/images/logo.png')}}" alt="logo-icon"> </a>
+                <a href="/" title="logo"><img src="{{asset('assets/images/logo.png')}}" alt="logo-icon"> </a>
             </div>
             <!-- //logo end -->
 
@@ -54,7 +54,7 @@ Author URL: http://w3layouts.com
 
                 <!-- sidebar nav start -->
                 <ul class="nav nav-pills nav-stacked custom-nav">
-                    <li class="active"><a href="index.html"><i class="fa fa-tachometer"></i><span> Dashboard</span></a>
+                    <li class="active"><a href="/"><i class="fa fa-tachometer"></i><span> Dashboard</span></a>
                     </li>
 
 
@@ -237,7 +237,7 @@ Author URL: http://w3layouts.com
 
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb my-breadcrumb">
-                        <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
                         <li class="breadcrumb-item active" aria-current="page">
                             @yield('location')

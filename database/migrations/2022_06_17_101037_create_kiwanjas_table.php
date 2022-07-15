@@ -14,7 +14,7 @@ class CreateKiwanjasTable extends Migration
     public function up()
     {
         Schema::create('kiwanjas', function (Blueprint $table) {
-            $table->id();
+            $table->id("kiwanja_id");
             $table->bigInteger("authority_id");
             $table->bigInteger("user_id");
             $table->boolean("conflict")->nullable();
