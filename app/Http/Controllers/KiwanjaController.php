@@ -15,15 +15,17 @@ class KiwanjaController extends Controller
 
     public function sell(Request $request, $id)
     {
+        // dd("hereee");
         // dd($request);
-        $kiwanja = Kiwanja::where('id', $id)->first();
+        $kiwanja = Kiwanja::where('authority_id', $id)->first();
         $kiwanja->price = $request->price;
         $kiwanja->save();
         return back();
     }
     public function sold(Request $request, $id)
     {
-        $kiwanja = Kiwanja::where('id', $id)->first();
+        // dd("sold");
+        $kiwanja = Kiwanja::where('authority_id', $id)->first();
         $kiwanja->price = NULL;
         $kiwanja->save();
         return back();

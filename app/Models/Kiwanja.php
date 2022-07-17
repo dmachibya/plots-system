@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Kiwanja extends Model
 {
     use HasFactory;
+
+    protected $primaryKey = 'kiwanja_id';
 }

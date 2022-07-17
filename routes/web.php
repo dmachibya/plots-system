@@ -38,8 +38,8 @@ Route::get('/authority/{id}', [AuthorityController::class, 'index'])->middleware
 Route::post('/admin/authority/{level}', [AuthorityController::class, 'create'])->middleware("admin");
 Route::get('/authority/{level}/{level_id}', [AuthorityController::class, 'view'])->middleware("auth");
 Route::get('/kiwanja/{id}', [KiwanjaController::class, 'view'])->middleware("auth");
-Route::post('/admin/kiwanja/sell/{id}', [KiwanjaController::class, 'sell'])->middleware("admin");
-Route::get('/admin/kiwanja/sold/{id}', [KiwanjaController::class, 'sold'])->middleware("admin");
+Route::post('/admin/kiwanja/sell/{id}', [KiwanjaController::class, 'sell'])->middleware("auth");
+Route::get('/admin/kiwanja/sold/{id}', [KiwanjaController::class, 'sold'])->middleware("auth");
 Route::get('/plots', [AuthorityController::class, 'plots']);
 
 Route::get('/users', [UserController::class, 'users'])->middleware('admin');

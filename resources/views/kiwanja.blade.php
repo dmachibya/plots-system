@@ -3,36 +3,42 @@
 @section('content')
 <div x-data="{districtModal: false, tarafaModal: false, kataModal: false, kijijiModal: false, kiwanjaModal: false}">
 
-    @if ($kiwanja->price == Null)
+    {{-- outer --}}
+    @if ($kiwanja->price != Null)
+
+    {{-- no pricee --}}
+    {{-- one --}}
     @if (Auth::user()->role != "0")
     <div class="flex justify-end">
-        <a href="/admin/kiwanja/sold/{{$kiwanja->id}}"
+        <a href="/admin/kiwanja/sold/{{$kiwanja->authority_id}}"
             class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as Sold
         </a>
     </div>
     @else
     @if(Auth::user()->id == $kiwanja->user_id)
     <div class="flex justify-end">
-        <a href="/admin/kiwanja/sold/{{$kiwanja->id}}"
+        <a href="/admin/kiwanja/sold/{{$kiwanja->authority_id}}"
             class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as Sold
         </a>
     </div>
     @endif
     @endif
+    {{-- one --}}
+    {{-- on sell operations below--}}
     @else
     @if (Auth::user()->role != "0")
-    <div class="flex justify-end">
-        <a href="/admin/kiwanja/sold/{{$kiwanja->id}}"
-            class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as Sold
-        </a>
+    <div class="flex cursor-pointer justify-end" @click="districtModal = !districtModal">
+        <div class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as on sell
+        </div>
     </div>
     @else
+
     @if(Auth::user()->id == $kiwanja->user_id)
-    <div class="flex justify-end">
-        <a href="/admin/kiwanja/sold/{{$kiwanja->id}}"
-            class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as Sold
-        </a>
+    <div class="flex cursor-pointer justify-end" @click="districtModal = !districtModal">
+        <div class="bg-blue-500 shadow-md px-4 py-2 text-white rounded-md my-2">Mark as on Sell
+        </div>
     </div>
+    @endif
     @endif
     @endif
 
@@ -45,7 +51,8 @@
 
             <div class="mt-8 px-4 flex flex-col gap-y-2">
                 <h1 class="font-bold text-xl text-center">Sell Kiwanja</h1>
-                <form action="/admin/kiwanja/sell/{{$kiwanja->id}}" class="flex flex-col gap-y-4" method="post">
+                <form action="/admin/kiwanja/sell/{{$kiwanja->authority_id}}" class="flex flex-col gap-y-4"
+                    method="post">
                     {{ csrf_field() }}
                     <div class="">
                         <label for="price">Selling Price</label>
